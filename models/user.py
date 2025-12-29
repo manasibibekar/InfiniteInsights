@@ -1,7 +1,6 @@
-from flask_login import UserMixin
 from extensions import db
 
-class User(UserMixin, db.Model):
+class User(db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -9,11 +8,9 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(256), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-    # relationships
     posts = db.relationship(
         "Post",
         back_populates="author",
-        lazy=True,
         cascade="all, delete-orphan"
     )
 
